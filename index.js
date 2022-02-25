@@ -24,8 +24,8 @@ db.once('open', function() {
     
     app.get("/getclass", async function(req,res){
         
-        let Classroom = await Classroom.find({});
-        res.json({statusCode:200, list:Classroom });
+        let classroom = await Classroom.find({});
+        res.json({statusCode:200, list:classroom });
     })
 
     const PORT = process.env.PORT || 80;
