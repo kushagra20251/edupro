@@ -94,6 +94,15 @@ db.once('open', function() {
         res.json({statusCode:200 });
     
     })
+    app.post("/getRole", async function(req,res){
+        let isStudent = await student.find({id:req.body.id});
+        let isFaculty = await faculty.find({id:req.body.id});
+        if(isStudent.length)
+            res.json({statusCode:200,role:'student'});
+        else if(isFaculty.length)
+            res.json({statusCode:200,role:'faculty'});
+        else res.json({statusCode:200,role:'admin'});
+    })
 
     const PORT = process.env.PORT || 80;
 

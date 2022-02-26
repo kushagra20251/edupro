@@ -14,6 +14,9 @@ let faculty = new mongoose.Schema({
     },
     email:{
       type:String
+    },
+    id:{
+      type:String
     }
 })
 module.exports = mongoose.model('faculty',faculty)

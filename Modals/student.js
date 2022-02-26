@@ -14,6 +14,9 @@ let student = new mongoose.Schema({
     },
     email:{
       type:String
+    },
+    id:{
+      type:String
     }
 })
 module.exports = mongoose.model('student',student)
