@@ -3,9 +3,6 @@ let school = new mongoose.Schema({
     name:{
       type: String,
     },
-    adminName:{
-      type: String,
-    },
     schoolCode:{
       type: String,
     },
@@ -17,6 +14,12 @@ let school = new mongoose.Schema({
     },
     courseIds:{
       type: Array
+    },
+    password:{
+      type:String
+    },
+    email:{
+      type:String
     }
 })
 module.exports = mongoose.model('school',school)

@@ -35,8 +35,9 @@ db.once('open', function() {
     app.post("/adminRegister", async function(req,res){
         var newschool = new school({
             name:req.body.name,
-            adminName:req.body.adminName,
-            schoolCode:req.body.id
+            schoolCode:req.body.id,
+            password:req.body.password,
+            email:req.body.email,
         });
         newschool.save();
         res.json({statusCode:200, list:classroom });
