@@ -97,9 +97,9 @@ db.once('open', function() {
     app.get("/getRole", async function(req,res){
         let isStudent = await student.find({id:req.query.id});
         let isFaculty = await faculty.find({id:req.query.id});
-        if(isStudent.length)
+        if(isStudent.length>0)
             res.json({statusCode:200,role:'student'});
-        else if(isFaculty.length)
+        else if(isFaculty.length>0)
             res.json({statusCode:200,role:'faculty'});
         else res.json({statusCode:200,role:'admin'});
     })
