@@ -94,9 +94,9 @@ db.once('open', function() {
         res.json({statusCode:200 });
     
     })
-    app.post("/getRole", async function(req,res){
-        let isStudent = await student.find({id:req.body.id});
-        let isFaculty = await faculty.find({id:req.body.id});
+    app.ge("/getRole", async function(req,res){
+        let isStudent = await student.find({id:req.query.id});
+        let isFaculty = await faculty.find({id:req.query.id});
         if(isStudent.length)
             res.json({statusCode:200,role:'student'});
         else if(isFaculty.length)
