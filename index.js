@@ -94,7 +94,7 @@ db.once('open', function() {
         res.json({statusCode:200 });
     
     })
-    app.ge("/getRole", async function(req,res){
+    app.get("/getRole", async function(req,res){
         let isStudent = await student.find({id:req.query.id});
         let isFaculty = await faculty.find({id:req.query.id});
         if(isStudent.length)
