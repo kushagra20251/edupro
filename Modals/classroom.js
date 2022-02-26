@@ -17,6 +17,9 @@ let Classroom = new mongoose.Schema({
     },
     studentIds:{
       type: Array,
+    },
+    schoolCode:{
+      type:String
     }
 })
 module.exports = mongoose.model('Classroom',Classroom)

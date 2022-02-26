@@ -19,6 +19,10 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
 const Classroom = require('./Modals/classroom');
+const school = require('./Modals/school');
+const student = require('./Modals/student');
+const faculty = require('./Modals/faculty');
+const classroom = require('./Modals/classroom');
 
 db.once('open', function() {
     
@@ -26,6 +30,68 @@ db.once('open', function() {
         
         let classroom = await Classroom.find({});
         res.json({statusCode:200, list:classroom });
+    })
+
+    app.post("/adminRegister", async function(req,res){
+        var newschool = new school({
+            name:req.body.name,
+            adminName:req.body.adminName,
+            schoolCode:req.body.id
+        });
+        newschool.save();
+        res.json({statusCode:200, list:classroom });
+    })
+    app.post("/studentRegister", async function(req,res){
+        let schoolMatch=  await school.find({name:req.body.schoolName,schoolCode:req.body.schoolCode});
+        if(schoolMatch.length>0)
+        {
+            var newstudent = new student({
+                id:req.body.id,
+                name:req.body.name,
+                schoolCode:req.body.schoolCode,
+                password:req.body.password,
+                email:req.body.email
+            });
+            newstudent.save();
+            res.json({statusCode:200 });
+        }
+        else
+        {
+            res.json({statusCode:404, error:"school code not match" });
+        }
+    })
+    app.post("/facultyRegister", async function(req,res){
+        let schoolMatch=  await school.find({name:req.body.schoolName,schoolCode:req.body.schoolCode});
+        if(schoolMatch.length>0)
+        {
+            var newfaculty = new faculty({
+            id:req.body.id,
+            name:req.body.name,
+            schoolCode:req.body.schoolCode,
+            password:req.body.password,
+            email:req.body.email
+            });
+            newfaculty.save();
+            res.json({statusCode:200 });
+        }
+        else
+        {
+            res.json({statusCode:404, error:"school code not match" });
+        }
+    })
+    
+    app.post("/addClass", async function(req,res){
+        var newclassroom = new classroom({
+        id:req.body.id,
+        name:req.body.name,
+        subject:req.body.subject,
+        link:req.body.link,
+        facultyId:req.body.facultyId,
+        schoolCode:req.body.schoolCode
+        });
+        newclassroom.save();
+        res.json({statusCode:200 });
+    
     })
 
     const PORT = process.env.PORT || 80;
