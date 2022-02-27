@@ -38,8 +38,8 @@ db.once('open', function() {
         let classtoJoin=[];
         for(let i=0;i<classroom1.length;i++)
         {
-            if(classroom2.find(elm=>elm.id===classroom1[i].id))
-                classtoJoin.push(classroom2);
+            if(classroom2.find(elm=>elm.id===classroom1[i].id)===undefined)
+                classtoJoin.push(classroom1[i]);
         }
 
         res.json({statusCode:200, list:classtoJoin });
