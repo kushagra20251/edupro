@@ -49,6 +49,12 @@ db.once('open', function() {
         let classroom = await Classroom.find({studentIds:req.query.id});
         res.json({statusCode:200, list:classroom });
     })
+    
+    app.get("/addToClass", async function(req,res){
+        Classroom.updateOne({id:req.query.classId},{ $push: { studentIds:req.query.id}});
+        student.updateOne({id:req.query.id},{ $push:{courseList:req.query.classId}});
+        res.json({statusCode:200});
+    })
     app.get("/getclassFaculty", async function(req,res){
         
         let classroom = await Classroom.find({facultyId:req.query.id});
