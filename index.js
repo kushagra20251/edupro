@@ -78,11 +78,13 @@ db.once('open', function() {
         }
         else
         {
-            let a= await Classroom.updateOne({id:req.query.classId},{chats:[{
+            let w=[];
+            w.push({
                 messageBy:req.query.id,
                 message:req.query.message,
                 date:new Date()
-            }]});
+            });
+            let a= await Classroom.updateOne({id:req.query.classId},{chats:w});
         }
         res.json({statusCode:200});
     })
