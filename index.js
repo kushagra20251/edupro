@@ -66,7 +66,7 @@ db.once('open', function() {
     })
     
     app.post("/addMessage", async function(req,res){
-        let b=await Classroom.find({id:req.query.classId});
+        let b=await Classroom.findOne({id:req.query.classId});
         console.log(b.chats);
         if(b.chats!==undefined)
         {
