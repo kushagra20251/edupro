@@ -67,7 +67,8 @@ db.once('open', function() {
     
     app.post("/addMessage", async function(req,res){
         let b=await Classroom.find({id:req.query.classId});
-        if(b.chats)
+        console.log(b.chats);
+        if(b.chats!==undefined)
         {
             let a= await Classroom.updateOne({id:req.query.classId},{$push:{chats:{
                 messageBy:req.query.id,
