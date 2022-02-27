@@ -25,7 +25,7 @@ let Classroom = new mongoose.Schema({
       type:String
     },
     chats:{
-      type:String
+      type:Array
     }
 })
 module.exports = mongoose.model('Classroom',Classroom)
