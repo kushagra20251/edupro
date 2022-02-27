@@ -87,7 +87,7 @@ db.once('open', function() {
     })
     
     app.get("/getMessage", async function(req,res){
-        let classroom = await Classroom.find({id:req.query.classId});
+        let classroom = await Classroom.findOne({id:req.query.classId});
 
         res.json({statusCode:200,chats:classroom.chats});
     })
