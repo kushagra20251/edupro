@@ -66,13 +66,13 @@ db.once('open', function() {
     })
     
     app.post("/addMessage", async function(req,res){
-        let b=await Classroom.findOne({id:req.query.classId});
+        let b=await Classroom.findOne({id:req.body.classId});
         console.log(b.chats);
         if(b.chats!==undefined)
         {
-            let a= await Classroom.updateOne({id:req.query.classId},{$push:{chats:{
-                messageBy:req.query.id,
-                message:req.query.message,
+            let a= await Classroom.updateOne({id:req.body.classId},{$push:{chats:{
+                messageBy:req.body.id,
+                message:req.body.message,
                 date:new Date()
             }}});
         }
@@ -80,11 +80,11 @@ db.once('open', function() {
         {
             let w=[];
             w.push({
-                messageBy:req.query.id,
-                message:req.query.message,
+                messageBy:req.body.id,
+                message:req.body.message,
                 date:new Date()
             });
-            let a= await Classroom.updateOne({id:req.query.classId},{chats:w});
+            let a= await Classroom.updateOne({id:req.body.classId},{chats:w});
         }
         res.json({statusCode:200});
     })
