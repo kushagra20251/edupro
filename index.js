@@ -64,7 +64,7 @@ db.once('open', function() {
         res.json({statusCode:200});
     })
     
-    app.get("/addMessage", async function(req,res){
+    app.post("/addMessage", async function(req,res){
         let a= await Classroom.updateOne({id:req.query.classId},{$push:{chats:{
             messageBy:req.query.id,
             message:req.query.message,
@@ -78,7 +78,7 @@ db.once('open', function() {
 
         res.json({statusCode:200,chats:classroom.chats});
     })
-    app.get("/addNote", async function(req,res){
+    app.post("/addNote", async function(req,res){
         var newNote = new note({
             title:req.body.title,
             notes:req.body.notes,
