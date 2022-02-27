@@ -62,6 +62,21 @@ db.once('open', function() {
         let b= await student.updateOne({id:req.query.id},{ $pull:{courseList:req.query.classId}});
         res.json({statusCode:200});
     })
+    
+    app.get("/addMessage", async function(req,res){
+        let a= await Classroom.updateOne({id:req.query.classId},{$push:{chats:{
+            messageBy:req.query.id,
+            message:req.query.message,
+            date:new Date()
+        }}});
+        res.json({statusCode:200});
+    })
+    
+    app.get("/getMessage", async function(req,res){
+        let classroom = await Classroom.find({id:req.query.classId});
+
+        res.json({statusCode:200,chats:classroom.chats});
+    })
     app.get("/getclassFaculty", async function(req,res){
         
         let classroom = await Classroom.find({facultyId:req.query.id});

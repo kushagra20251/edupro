@@ -23,6 +23,9 @@ let Classroom = new mongoose.Schema({
     },
     schoolCode:{
       type:String
+    },
+    chats:{
+      type:String
     }
 })
 module.exports = mongoose.model('Classroom',Classroom)
