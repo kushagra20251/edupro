@@ -6,5 +6,8 @@ let note = new mongoose.Schema({
     notes:{
       type: String,
     },
+    notesBy:{
+      type: String,
+    },
 })
 module.exports = mongoose.model('note',note)
