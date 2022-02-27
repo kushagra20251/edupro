@@ -31,6 +31,29 @@ db.once('open', function() {
         let classroom = await Classroom.find({});
         res.json({statusCode:200, list:classroom });
     })
+    app.get("/getClasstoJoinStudent", async function(req,res){
+        
+        let classroom1 = await Classroom.find({});
+        let classroom2 = await Classroom.find({studentIds:req.query.id});
+        let classtoJoin=[];
+        for(let i=0;i<classroom1.length;i++)
+        {
+            if(classroom2.find(elm=>elm.id===classroom1[i].id))
+                classtoJoin.push(classroom2);
+        }
+
+        res.json({statusCode:200, list:classtoJoin });
+    })
+    app.get("/getStudentClass", async function(req,res){
+        
+        let classroom = await Classroom.find({studentIds:req.query.id});
+        res.json({statusCode:200, list:classroom });
+    })
+    app.get("/getclassFaculty", async function(req,res){
+        
+        let classroom = await Classroom.find({facultyId:req.query.facultyId});
+        res.json({statusCode:200, list:classroom });
+    })
 
     app.post("/adminRegister", async function(req,res){
         var newschool = new school({
@@ -83,18 +106,19 @@ db.once('open', function() {
     
     app.post("/addClass", async function(req,res){
         let id = uniqid();
+        let facultydata= await faculty.find({id:req.body.facultyId},{schoolCode:1});
         var newclassroom = new classroom({
         id:id,
         name:req.body.name,
         subject:req.body.subject,
         link:req.body.link,
         facultyId:req.body.facultyId,
-        schoolCode:req.body.schoolCode
+        schoolCode:facultydata.schoolCode
         });
         newclassroom.save();
         faculty.updateOne({id:req.body.facultyId},
             { $push: { courseList:id}});
-        school.updateOne({schoolCode:req.body.schoolCode},
+        school.updateOne({schoolCode:facultydata.schoolCode},
             { $push: { courseIds:id}});
 
         res.json({statusCode:200 });
