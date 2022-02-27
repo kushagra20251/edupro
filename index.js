@@ -23,6 +23,7 @@ const school = require('./Modals/school');
 const student = require('./Modals/student');
 const faculty = require('./Modals/faculty');
 const classroom = require('./Modals/classroom');
+const note = require('./Modals/note');
 
 db.once('open', function() {
     
@@ -76,6 +77,21 @@ db.once('open', function() {
         let classroom = await Classroom.find({id:req.query.classId});
 
         res.json({statusCode:200,chats:classroom.chats});
+    })
+    app.get("/addNote", async function(req,res){
+        var newNote = new note({
+            title:req.body.title,
+            notes:req.body.notes,
+            notesBy:req.body.id
+        });
+        newNote.save();
+        res.json({statusCode:200});
+    })
+    
+    app.get("/getNotes", async function(req,res){
+        let notes = await note.find({notesBy:req.query.id});
+
+        res.json({statusCode:200,notes:notes});
     })
     app.get("/getclassFaculty", async function(req,res){
         
