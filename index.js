@@ -8,7 +8,8 @@ const router = express.Router();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 const cors = require('cors');
-app.use(cors());
+
+app.use(cors({ origin: true }));
 
 mongoose.connect('mongodb+srv://gourav:BPPiQ76BIJYIcM6X@cluster0.2assr.mongodb.net/eduPro?retryWrites=true&w=majority', {useNewUrlParser: true});
 
