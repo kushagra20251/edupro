@@ -82,8 +82,9 @@ db.once('open', function() {
     })
     
     app.post("/addClass", async function(req,res){
+        let id = uniqid();
         var newclassroom = new classroom({
-        id:req.body.id,
+        id:id,
         name:req.body.name,
         subject:req.body.subject,
         link:req.body.link,
@@ -91,12 +92,19 @@ db.once('open', function() {
         schoolCode:req.body.schoolCode
         });
         newclassroom.save();
+        faculty.updateOne({id:req.body.facultyId},
+            { $push: { courseList:id}});
+        school.updateOne({schoolCode:req.body.schoolCode},
+            { $push: { courseIds:id}});
+
         res.json({statusCode:200 });
     
     })
     app.get("/getRole", async function(req,res){
+        console.log(req.query.id);
         let isStudent = await student.find({id:req.query.id});
         let isFaculty = await faculty.find({id:req.query.id});
+        console.log(isStudent,isFaculty);
         if(isStudent.length>0)
             res.json({statusCode:200,role:'student'});
         else if(isFaculty.length>0)
