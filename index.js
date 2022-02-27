@@ -51,7 +51,7 @@ db.once('open', function() {
     })
     app.get("/getclassFaculty", async function(req,res){
         
-        let classroom = await Classroom.find({facultyId:req.query.facultyId});
+        let classroom = await Classroom.find({facultyId:req.query.id});
         res.json({statusCode:200, list:classroom });
     })
 
