@@ -51,8 +51,15 @@ db.once('open', function() {
     })
     
     app.get("/addToClass", async function(req,res){
-        Classroom.updateOne({id:req.query.classId},{ $push: { studentIds:req.query.id}});
-        student.updateOne({id:req.query.id},{ $push:{courseList:req.query.classId}});
+        console.log(req.query.classId,req.query.id)
+        let a= await Classroom.updateOne({id:req.query.classId},{ $push: { studentIds:req.query.id}});
+        let b= await student.updateOne({id:req.query.id},{ $push:{courseList:req.query.classId}});
+        res.json({statusCode:200});
+    })
+    app.get("/leaveClass", async function(req,res){
+        console.log(req.query.classId,req.query.id)
+        let a= await Classroom.updateOne({id:req.query.classId},{ $pull: { studentIds:req.query.id}});
+        let b= await student.updateOne({id:req.query.id},{ $pull:{courseList:req.query.classId}});
         res.json({statusCode:200});
     })
     app.get("/getclassFaculty", async function(req,res){
